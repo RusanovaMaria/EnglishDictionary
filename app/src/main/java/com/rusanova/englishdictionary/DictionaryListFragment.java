@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 import com.rusanova.englishdictionary.dummy.DummyContent;
 import com.rusanova.englishdictionary.dummy.DummyContent.DummyItem;
 
-import java.util.List;
-
 /**
  * A fragment representing a list of Items.
  * <p/>
@@ -69,7 +67,7 @@ public class DictionaryListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter2(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
         return view;
     }

@@ -1,5 +1,6 @@
 package com.rusanova.englishdictionary;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,7 +20,9 @@ import android.widget.ImageView;
 import com.rusanova.englishdictionary.dummy.DummyContent;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, DictionaryListFragment.OnListFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String SHOW_DICTIONARY_LIST = "showDictionaryList";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +53,16 @@ public class MainActivity extends AppCompatActivity
         dictionariesView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDictionaries(view);
+                showDictionaries();
             }
         });
 
     }
 
-    private void showDictionaries(View view) {
-
+    private void showDictionaries() {
+        Intent intent = new Intent(MainActivity.this, MainActionsActivity.class);
+        intent.putExtra("actionName", SHOW_DICTIONARY_LIST);
+        startActivity(intent);
     }
 
     @Override
@@ -105,9 +110,5 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    public void onListFragmentInteraction(DummyContent.DummyItem item){
-
     }
 }
