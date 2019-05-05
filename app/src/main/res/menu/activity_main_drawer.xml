@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_dictionaries"
+            android:icon="@drawable/ic_menu_dictionaries"
+            android:title="Dictionaries" />
+        <item
+            android:id="@+id/nav_words"
+            android:icon="@drawable/ic_menu_words"
+            android:title="Words" />
+        <item
+            android:id="@+id/nav_tasks"
+            android:icon="@drawable/ic_menu_tasks"
+            android:title="Tasks" />
+        <item
+            android:id="@+id/nav_languages"
+            android:icon="@drawable/ic_menu_languages"
+            android:title="Languages" />
+    </group>
+
+    <item android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/nav_manage"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Tools" />
+        </menu>
+    </item>
+
+
+</menu>
