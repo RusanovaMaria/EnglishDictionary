@@ -12,4 +12,8 @@
     <string name="title_activity_dictionary">DictionaryActivity</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_main_actions">MainActionsActivity</string>
+
+    <string name="title_dictionaries_item">Dictionaries</string>
+    <string name="title_words_item">Words</string>
+    <string name="title_tasks_item">Tasks</string>
 </resources>
