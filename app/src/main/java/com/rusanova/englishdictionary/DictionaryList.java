@@ -14,7 +14,7 @@ public class DictionaryList {
        mDictionaries = new ArrayList<>();
        mDictionaries.add(new Dictionary("Travels", "for travels"));
        mDictionaries.add(new Dictionary("Work", "for work"));
-       mDictionaries.add(new Dictionary("Colors", "names for different colors"));
+       mDictionaries.add(new Dictionary("Colors", "names of different colors"));
     }
 
     public List<Dictionary> getDictionaries() {

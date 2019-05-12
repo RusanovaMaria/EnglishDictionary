@@ -11,12 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class DictionaryListFragment extends Fragment {
+    private static final int PAGE_NUMBER = 1;
 
     public DictionaryListFragment() {
 
     }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
