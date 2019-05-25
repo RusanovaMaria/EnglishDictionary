@@ -11,10 +11,10 @@ import android.widget.TextView;
 import java.util.List;
 
 public class ElementRecyclerViewAdapter extends RecyclerView.Adapter<ElementRecyclerViewAdapter.ViewHolder> {
-    private List<Element> elements;
+    private List<Element> mElements;
 
     public ElementRecyclerViewAdapter(List elements){
-        this.elements = elements;
+        this.mElements = elements;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -41,8 +41,8 @@ public class ElementRecyclerViewAdapter extends RecyclerView.Adapter<ElementRecy
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        viewHolder.name.setText(elements.get(i).getName());
-        viewHolder.description.setText(elements.get(i).getDescription());
+        viewHolder.name.setText(mElements.get(i).getName());
+        viewHolder.description.setText(mElements.get(i).getDescription());
     }
 
     @Override
@@ -52,6 +52,10 @@ public class ElementRecyclerViewAdapter extends RecyclerView.Adapter<ElementRecy
 
     @Override
     public int getItemCount() {
-        return elements.size();
+        return mElements.size();
+    }
+
+    public void setElements(List<Element> elements) {
+        mElements = elements;
     }
 }

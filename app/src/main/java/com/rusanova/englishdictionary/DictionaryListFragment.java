@@ -10,8 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 public class DictionaryListFragment extends Fragment {
     private static final int PAGE_NUMBER = 1;
+    private RecyclerView mRecyclerView;
+    private ElementRecyclerViewAdapter mAdapter;
 
     public DictionaryListFragment() {
 
@@ -28,10 +32,11 @@ public class DictionaryListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dictionary_list, container, false);
         Context context = view.getContext();
-        RecyclerView recyclerView = (RecyclerView) view;
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        DictionaryList dictionaryList = new DictionaryList();
-        recyclerView.setAdapter(new ElementRecyclerViewAdapter(dictionaryList.getDictionaries()));
+        mRecyclerView = (RecyclerView) view;
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        DictionaryList dictionaryList = DictionaryList.get(getActivity());
+        mAdapter = new ElementRecyclerViewAdapter(dictionaryList.getDictionaries());
+        mRecyclerView.setAdapter(mAdapter);
         return view;
     }
 
@@ -50,6 +55,24 @@ public class DictionaryListFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateUI();
+    }
+
+    private void updateUI(){
+        DictionaryList dictionaryList = DictionaryList.get(getActivity());
+        List<Element> dictionaries = dictionaryList.getDictionaries();
+        if(mAdapter == null) {
+            mAdapter = new ElementRecyclerViewAdapter(dictionaries);
+            mRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.setElements(dictionaries);
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     public interface OnFragmentInteractionListener {
