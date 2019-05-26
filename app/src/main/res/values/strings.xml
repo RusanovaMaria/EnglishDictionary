@@ -16,4 +16,8 @@
     <string name="title_dictionaries_item">Dictionaries</string>
     <string name="title_words_item">Words</string>
     <string name="title_tasks_item">Tasks</string>
+    <string name="title_activity_adding_dictionary"></string>
+    <string name="create_dictionary_title">Create dictionary</string>
+    <string name="dictionary_name_hint">Please enter the name</string>
+    <string name="dictionary_description_hint">Please enter the description</string>
 </resources>

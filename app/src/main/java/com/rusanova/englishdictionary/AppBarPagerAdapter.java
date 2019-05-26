@@ -33,6 +33,6 @@ public class AppBarPagerAdapter extends FragmentPagerAdapter {
             case 2:
                 return "Tasks";
         }
-        return "Dictionaries";
+        return "";
     }
 }

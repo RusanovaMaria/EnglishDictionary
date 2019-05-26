@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 public class DictionaryListFragment extends Fragment {
-    private static final int PAGE_NUMBER = 1;
+    private static final int PAGE_NUMBER = 0;
     private RecyclerView mRecyclerView;
     private ElementRecyclerViewAdapter mAdapter;
 
@@ -73,6 +73,10 @@ public class DictionaryListFragment extends Fragment {
             mAdapter.setElements(dictionaries);
             mAdapter.notifyDataSetChanged();
         }
+    }
+
+    public static int getPageNumber() {
+        return PAGE_NUMBER;
     }
 
     public interface OnFragmentInteractionListener {

@@ -8,6 +8,7 @@ public class Dictionary implements Element {
     private String description;
 
     public Dictionary(String name, String description) {
+        this.id = UUID.randomUUID();
         this.name = name;
         this.description = description;
     }
