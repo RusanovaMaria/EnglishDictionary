@@ -2,26 +2,25 @@ package com.rusanova.englishdictionary.element;
 
 import java.util.UUID;
 
-public class Dictionary implements Element {
-    private UUID mId;
+public class Dictionary {
+    private int mId;
     private String mName;
     private String mDescription;
 
     public Dictionary(String name, String description) {
-        mId = UUID.randomUUID();
         mName = name;
         this.mDescription = description;
     }
 
-    public Dictionary(UUID id) {
+    public Dictionary(int id) {
         this.mId = id;
     }
 
-    public UUID getId() {
+    public int getId() {
         return mId;
     }
 
-    public void setId(UUID id) {
+    public void setId(int id) {
         this.mId = id;
     }
 

@@ -1,9 +1,10 @@
-package com.rusanova.englishdictionary;
+package com.rusanova.englishdictionary.list;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.rusanova.englishdictionary.database.DatabaseHelper;
 import com.rusanova.englishdictionary.database.cursorwrapper.WordCursorWrapper;
@@ -38,10 +39,10 @@ public class WordList {
 
     public void delete(Word word) {
         ContentValues values = getContentValues(word);
-        String uuidString = word.getId().toString();
+        String uuidString = Integer.toString(word.getId());
         mDatabase.delete(WordDbSchema.WordTable.NAME,
-                WordDbSchema.WordTable.Cols.UUID + "=?",
-                new String[] {uuidString});
+                "_id=?",
+                new String[]{uuidString});
     }
 
     public List<Word> getWords() {
@@ -59,10 +60,10 @@ public class WordList {
         return words;
     }
 
-    public Word getWord(UUID id) {
+    public Word getWord(int id) {
         WordCursorWrapper cursor = queryWords
-                (WordDbSchema.WordTable.Cols.UUID + "=?",
-                        new String[]{id.toString()});
+                ("_id=?",
+                        new String[]{Integer.toString(id)});
         try {
             if (cursor.getCount() == 0) {
                 return null;
@@ -76,11 +77,10 @@ public class WordList {
 
     private static ContentValues getContentValues(Word word) {
         ContentValues values = new ContentValues();
-        values.put(WordDbSchema.WordTable.Cols.UUID, word.getId().toString());
         values.put(WordDbSchema.WordTable.Cols.NAME, word.getName());
         values.put(WordDbSchema.WordTable.Cols.TRANSLATION, word.getDescription().toString());
-        values.put(WordDbSchema.WordTable.Cols.DICTIONARY_UUID,
-                (word.getDictionary() == null ? "" : word.getDictionary().getId().toString()));
+        values.put(WordDbSchema.WordTable.Cols.DICTIONARY_ID,
+                (word.getDictionary() == null ? null : Integer.toString(word.getDictionary().getId())));
         return values;
     }
 
@@ -92,8 +92,9 @@ public class WordList {
                 whereArgs,
                 null,
                 null,
-                WordDbSchema.WordTable.Cols.NAME
+                null
         );
-        return new WordCursorWrapper(cursor, mContext);
+        // return null;
+        return new WordCursorWrapper(cursor);
     }
 }

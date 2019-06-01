@@ -15,11 +15,11 @@ public class DictionaryCursorWrapper extends CursorWrapper {
     }
 
     public Dictionary getDictionary() {
-        String uuidString = getString(getColumnIndex(DictionaryDbSchema.DictionaryTable.Cols.UUID));
+        String idString = getString(getColumnIndex("_id"));
         String name = getString(getColumnIndex(DictionaryDbSchema.DictionaryTable.Cols.NAME));
         String description = getString(getColumnIndex(DictionaryDbSchema.DictionaryTable.Cols.DESCRIPTION));
 
-        Dictionary dictionary = new Dictionary(UUID.fromString(uuidString));
+        Dictionary dictionary = new Dictionary(Integer.parseInt(idString));
         dictionary.setName(name);
         dictionary.setDescription(description);
 

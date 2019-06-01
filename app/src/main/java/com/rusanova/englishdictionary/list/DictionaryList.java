@@ -1,4 +1,4 @@
-package com.rusanova.englishdictionary;
+package com.rusanova.englishdictionary.list;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -39,9 +39,9 @@ public class DictionaryList {
 
     public void delete(Dictionary dictionary) {
         ContentValues values = getContentValues(dictionary);
-        String uuidString = dictionary.getId().toString();
+        String uuidString = Integer.toString(dictionary.getId());
         mDatabase.delete(DictionaryDbSchema.DictionaryTable.NAME,
-                DictionaryDbSchema.DictionaryTable.Cols.UUID + "=?",
+                "_id=?",
                 new String[]{uuidString});
     }
 
@@ -62,7 +62,7 @@ public class DictionaryList {
 
     public Dictionary getDictionary(UUID id) {
         DictionaryCursorWrapper cursor = queryDictionaries(
-                DictionaryDbSchema.DictionaryTable.Cols.UUID + "?",
+                "_id=?",
                 new String[]{id.toString()});
         try {
             if (cursor.getCount() == 0) {
@@ -76,16 +76,15 @@ public class DictionaryList {
     }
 
     public void updateDictionary(Dictionary dictionary) {
-        String uuidString = dictionary.getId().toString();
+        String uuidString = Integer.toString(dictionary.getId());
         ContentValues values = getContentValues(dictionary);
         mDatabase.update(DictionaryDbSchema.DictionaryTable.NAME, values,
-                DictionaryDbSchema.DictionaryTable.Cols.UUID + " = ?",
+                "_id = ?",
                 new String[]{uuidString});
     }
 
     private static ContentValues getContentValues(Dictionary dictionary) {
         ContentValues values = new ContentValues();
-        values.put(DictionaryDbSchema.DictionaryTable.Cols.UUID, dictionary.getId().toString());
         values.put(DictionaryDbSchema.DictionaryTable.Cols.NAME, dictionary.getName());
         values.put(DictionaryDbSchema.DictionaryTable.Cols.DESCRIPTION, dictionary.getDescription());
         return values;
@@ -99,7 +98,7 @@ public class DictionaryList {
                 whereArgs,
                 null,
                 null,
-                DictionaryDbSchema.DictionaryTable.Cols.NAME
+                null
         );
         return new DictionaryCursorWrapper(cursor);
     }

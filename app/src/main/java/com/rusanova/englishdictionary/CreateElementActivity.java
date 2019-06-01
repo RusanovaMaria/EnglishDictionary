@@ -28,6 +28,7 @@ public class CreateElementActivity extends AppCompatActivity implements TextView
         setContentView(R.layout.activity_create_element);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         final int currentPageNumber = intent.getIntExtra(MainActivity.PAGE_NUMBER, -1);

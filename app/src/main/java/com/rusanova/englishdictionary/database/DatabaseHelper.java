@@ -19,21 +19,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + DictionaryDbSchema.DictionaryTable.NAME + "(" +
                 " _id integer primary key autoincrement, " +
-                DictionaryDbSchema.DictionaryTable.Cols.UUID + ", " +
                 DictionaryDbSchema.DictionaryTable.Cols.NAME + ", " +
                 DictionaryDbSchema.DictionaryTable.Cols.DESCRIPTION +
                 ")"
         );
 
-       db.execSQL("create table " + WordDbSchema.WordTable.NAME + "(" +
+        db.execSQL("create table " + WordDbSchema.WordTable.NAME + "(" +
                 " _id integer primary key autoincrement, " +
-                WordDbSchema.WordTable.Cols.UUID + ", " +
                 WordDbSchema.WordTable.Cols.NAME + ", " +
-                WordDbSchema.WordTable.Cols.TRANSLATION +
-                WordDbSchema.WordTable.Cols.DICTIONARY_UUID + ", " +
-                "foreign key(_id)" +
+                WordDbSchema.WordTable.Cols.TRANSLATION + ", " +
+                WordDbSchema.WordTable.Cols.DICTIONARY_ID + "," +
+                "foreign key(" + WordDbSchema.WordTable.Cols.DICTIONARY_ID + ")" +
                 " references " + DictionaryDbSchema.DictionaryTable.NAME +
-               "(_id))"
+                "(" + DictionaryDbSchema.DictionaryTable.Cols.UUID + "))"
         );
     }
 

@@ -2,27 +2,26 @@ package com.rusanova.englishdictionary.element;
 
 import java.util.UUID;
 
-public class Word implements Element {
-    private UUID mId;
+public class Word {
+    private int mId;
     private String mName;
     private String mDescription;
     private Dictionary mDictionary;
 
     public Word(String name, String translation) {
-        mId = UUID.randomUUID();
         mName = name;
         mDescription = translation;
     }
 
-    public Word(UUID id) {
+    public Word(int id) {
         mId = id;
     }
 
-    public UUID getId() {
+    public int getId() {
         return mId;
     }
 
-    public void setId(UUID id) {
+    public void setId(int id) {
         mId = id;
     }
 

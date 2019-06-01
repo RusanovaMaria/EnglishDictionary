@@ -1,4 +1,4 @@
-package com.rusanova.englishdictionary;
+package com.rusanova.englishdictionary.pagefragment;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.rusanova.englishdictionary.recyclerviewadapter.DictionaryRecyclerViewAdapter;
+import com.rusanova.englishdictionary.R;
+import com.rusanova.englishdictionary.list.DictionaryList;
 import com.rusanova.englishdictionary.element.Dictionary;
 
 import java.util.List;
