@@ -1,13 +1,19 @@
-package com.rusanova.englishdictionary;
+package com.rusanova.englishdictionary.element;
 
 import java.util.UUID;
 
 public interface Element {
 
-    String getName();
-    String getDescription();
-    void setName(String name);
-    void setDescription(String description);
+
     UUID getId();
+
     void setId(UUID id);
+
+    String getName();
+
+    void setName(String name);
+
+    String getDescription();
+
+    void setDescription(String description);
 }

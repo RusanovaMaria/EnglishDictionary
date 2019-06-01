@@ -1,8 +1,11 @@
-package com.rusanova.englishdictionary;
+package com.rusanova.englishdictionary.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.rusanova.englishdictionary.database.dbschema.DictionaryDbSchema;
+import com.rusanova.englishdictionary.database.dbschema.WordDbSchema;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
@@ -22,15 +25,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ")"
         );
 
-        db.execSQL("create table " + WordDbSchema.WordTable.NAME + "(" +
+       db.execSQL("create table " + WordDbSchema.WordTable.NAME + "(" +
                 " _id integer primary key autoincrement, " +
                 WordDbSchema.WordTable.Cols.UUID + ", " +
                 WordDbSchema.WordTable.Cols.NAME + ", " +
                 WordDbSchema.WordTable.Cols.TRANSLATION +
                 WordDbSchema.WordTable.Cols.DICTIONARY_UUID + ", " +
-                "foreign key(" + WordDbSchema.WordTable.Cols.DICTIONARY_UUID + ")" +
-                " references " + DictionaryDbSchema.DictionaryTable.NAME + "(" +
-                DictionaryDbSchema.DictionaryTable.Cols.UUID +"));"
+                "foreign key(_id)" +
+                " references " + DictionaryDbSchema.DictionaryTable.NAME +
+               "(_id))"
         );
     }
 

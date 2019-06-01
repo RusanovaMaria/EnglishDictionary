@@ -5,6 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.rusanova.englishdictionary.database.DatabaseHelper;
+import com.rusanova.englishdictionary.database.cursorwrapper.DictionaryCursorWrapper;
+import com.rusanova.englishdictionary.database.dbschema.DictionaryDbSchema;
+import com.rusanova.englishdictionary.element.Dictionary;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -14,20 +19,20 @@ public class DictionaryList {
     private SQLiteDatabase mDatabase;
     private static DictionaryList mDictionaryList;
 
-    private DictionaryList(Context context){
+    private DictionaryList(Context context) {
 
         mContext = context.getApplicationContext();
         mDatabase = new DatabaseHelper(mContext).getWritableDatabase();
     }
 
     public static DictionaryList get(Context context) {
-        if(mDictionaryList == null) {
+        if (mDictionaryList == null) {
             mDictionaryList = new DictionaryList(context);
         }
         return mDictionaryList;
     }
 
-    public void add (Dictionary dictionary) {
+    public void add(Dictionary dictionary) {
         ContentValues values = getContentValues(dictionary);
         mDatabase.insert(DictionaryDbSchema.DictionaryTable.NAME, null, values);
     }
@@ -36,38 +41,36 @@ public class DictionaryList {
         ContentValues values = getContentValues(dictionary);
         String uuidString = dictionary.getId().toString();
         mDatabase.delete(DictionaryDbSchema.DictionaryTable.NAME,
-                DictionaryDbSchema.DictionaryTable.Cols.UUID + "=?" ,
-                new String[] {uuidString});
+                DictionaryDbSchema.DictionaryTable.Cols.UUID + "=?",
+                new String[]{uuidString});
     }
 
-    public List<Element> getDictionaries() {
-        List<Element> dictionaries = new ArrayList<>();
-        DictionaryCursorWrapper cursor = queryCrimes(null, null);
+    public List<Dictionary> getDictionaries() {
+        List<Dictionary> dictionaries = new ArrayList<>();
+        DictionaryCursorWrapper cursor = queryDictionaries(null, null);
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 dictionaries.add(cursor.getDictionary());
                 cursor.moveToNext();
             }
-        }
-        finally {
+        } finally {
             cursor.close();
         }
         return dictionaries;
     }
 
     public Dictionary getDictionary(UUID id) {
-        DictionaryCursorWrapper cursor = queryCrimes(
+        DictionaryCursorWrapper cursor = queryDictionaries(
                 DictionaryDbSchema.DictionaryTable.Cols.UUID + "?",
-                new String[] {id.toString()});
+                new String[]{id.toString()});
         try {
             if (cursor.getCount() == 0) {
                 return null;
             }
             cursor.moveToFirst();
             return cursor.getDictionary();
-        }
-        finally {
+        } finally {
             cursor.close();
         }
     }
@@ -88,7 +91,7 @@ public class DictionaryList {
         return values;
     }
 
-    private DictionaryCursorWrapper queryCrimes(String whereClause, String[] whereArgs) {
+    private DictionaryCursorWrapper queryDictionaries(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
                 DictionaryDbSchema.DictionaryTable.NAME,
                 null,
@@ -96,7 +99,7 @@ public class DictionaryList {
                 whereArgs,
                 null,
                 null,
-                null
+                DictionaryDbSchema.DictionaryTable.Cols.NAME
         );
         return new DictionaryCursorWrapper(cursor);
     }

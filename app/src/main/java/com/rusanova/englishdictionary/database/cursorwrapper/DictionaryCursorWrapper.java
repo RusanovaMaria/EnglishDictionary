@@ -1,7 +1,10 @@
-package com.rusanova.englishdictionary;
+package com.rusanova.englishdictionary.database.cursorwrapper;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
+
+import com.rusanova.englishdictionary.database.dbschema.DictionaryDbSchema;
+import com.rusanova.englishdictionary.element.Dictionary;
 
 import java.util.UUID;
 

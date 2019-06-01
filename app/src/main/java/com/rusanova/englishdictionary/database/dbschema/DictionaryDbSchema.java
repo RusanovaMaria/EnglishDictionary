@@ -1,4 +1,4 @@
-package com.rusanova.englishdictionary;
+package com.rusanova.englishdictionary.database.dbschema;
 
 public class DictionaryDbSchema {
     public static final class DictionaryTable {

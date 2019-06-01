@@ -33,11 +33,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int pageNumber = mPager.getCurrentItem();
                 switch (pageNumber) {
-                    case  0:
+                    case 0:
                         Intent intent = new Intent(MainActivity.this, CreateElementActivity.class);
                         intent.putExtra(PAGE_NUMBER, pageNumber);
                         startActivity(intent);
-                    break;
+                        break;
+                    case 1:
+                        Intent intent1 = new Intent(MainActivity.this, CreateElementActivity.class);
+                        intent1.putExtra(PAGE_NUMBER, pageNumber);
+                        startActivity(intent1);
                 }
             }
         });

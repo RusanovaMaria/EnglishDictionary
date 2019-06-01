@@ -18,6 +18,9 @@
     <string name="title_tasks_item">Tasks</string>
     <string name="title_activity_adding_dictionary"></string>
     <string name="create_dictionary_title">Create dictionary</string>
-    <string name="dictionary_name_hint">Please enter the name</string>
-    <string name="dictionary_description_hint">Please enter the description</string>
+    <string name="dictionary_name_hint">Name</string>
+    <string name="dictionary_description_hint">Description</string>
+    <string name="create_word_title"> Create word</string>
+    <string name="word_name_hint">Word</string>
+    <string name="word_description_hint">Translation</string>
 </resources>

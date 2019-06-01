@@ -10,12 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.rusanova.englishdictionary.element.Dictionary;
+
 import java.util.List;
 
 public class DictionaryListFragment extends Fragment {
     private static final int PAGE_NUMBER = 0;
     private RecyclerView mRecyclerView;
-    private ElementRecyclerViewAdapter mAdapter;
+    private DictionaryRecyclerViewAdapter mAdapter;
 
     public DictionaryListFragment() {
 
@@ -30,12 +32,12 @@ public class DictionaryListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dictionary_list, container, false);
+        View view = inflater.inflate(R.layout.recycler_view_list, container, false);
         Context context = view.getContext();
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         DictionaryList dictionaryList = DictionaryList.get(getActivity());
-        mAdapter = new ElementRecyclerViewAdapter(dictionaryList.getDictionaries());
+        mAdapter = new DictionaryRecyclerViewAdapter(dictionaryList.getDictionaries());
         mRecyclerView.setAdapter(mAdapter);
         return view;
     }
@@ -43,7 +45,6 @@ public class DictionaryListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
     }
 
     @Override
@@ -63,11 +64,11 @@ public class DictionaryListFragment extends Fragment {
         updateUI();
     }
 
-    private void updateUI(){
+    private void updateUI() {
         DictionaryList dictionaryList = DictionaryList.get(getActivity());
-        List<Element> dictionaries = dictionaryList.getDictionaries();
-        if(mAdapter == null) {
-            mAdapter = new ElementRecyclerViewAdapter(dictionaries);
+        List<Dictionary> dictionaries = dictionaryList.getDictionaries();
+        if (mAdapter == null) {
+            mAdapter = new DictionaryRecyclerViewAdapter(dictionaries);
             mRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.setElements(dictionaries);
@@ -83,5 +84,4 @@ public class DictionaryListFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
 }

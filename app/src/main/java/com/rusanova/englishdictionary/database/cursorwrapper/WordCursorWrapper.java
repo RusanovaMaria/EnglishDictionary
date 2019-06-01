@@ -1,17 +1,22 @@
-package com.rusanova.englishdictionary;
+package com.rusanova.englishdictionary.database.cursorwrapper;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorWrapper;
+
+import com.rusanova.englishdictionary.list.DictionaryList;
+import com.rusanova.englishdictionary.database.dbschema.WordDbSchema;
+import com.rusanova.englishdictionary.element.Dictionary;
+import com.rusanova.englishdictionary.element.Word;
 
 import java.util.UUID;
 
 public class WordCursorWrapper extends CursorWrapper {
     private Context mContext;
 
-    public WordCursorWrapper(Cursor cursor, Context context) {
+    public WordCursorWrapper(Cursor cursor) {
         super(cursor);
-        mContext = context;
+       // mContext = context;
     }
 
     public Word getWord() {
@@ -22,7 +27,7 @@ public class WordCursorWrapper extends CursorWrapper {
 
         Word word = new Word(UUID.fromString(uuidString));
         word.setName(name);
-        word.setTranslation(translation);
+        word.setDescription(translation);
 
         if (dictionaryStringUUID != null) {
             UUID dictionaryUUID = UUID.fromString(dictionaryStringUUID);

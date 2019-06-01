@@ -1,40 +1,37 @@
-package com.rusanova.englishdictionary;
+package com.rusanova.englishdictionary.recyclerviewadapter;
 
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.rusanova.englishdictionary.R;
+import com.rusanova.englishdictionary.element.Dictionary;
 
 import java.util.List;
 
-public class ElementRecyclerViewAdapter extends RecyclerView.Adapter<ElementRecyclerViewAdapter.ViewHolder> {
-    private List<Element> mElements;
+public class DictionaryRecyclerViewAdapter extends RecyclerView.Adapter<DictionaryRecyclerViewAdapter.ViewHolder> {
+    private List<Dictionary> mElements;
 
-    public ElementRecyclerViewAdapter(List elements){
+    public DictionaryRecyclerViewAdapter(List elements){
         this.mElements = elements;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        CardView cardView;
         TextView name;
         TextView description;
-        ImageView image;
 
         public ViewHolder(View view) {
             super(view);
-            cardView = view.findViewById(R.id.cv);
             name = (TextView) view.findViewById(R.id.name);
             description = (TextView) view.findViewById(R.id.description);
-            image = (ImageView) view.findViewById(R.id.image);
         }
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_view, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_view2, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
@@ -55,7 +52,7 @@ public class ElementRecyclerViewAdapter extends RecyclerView.Adapter<ElementRecy
         return mElements.size();
     }
 
-    public void setElements(List<Element> elements) {
+    public void setElements(List<Dictionary> elements) {
         mElements = elements;
     }
 }
