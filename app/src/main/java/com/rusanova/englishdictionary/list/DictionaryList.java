@@ -60,10 +60,10 @@ public class DictionaryList {
         return dictionaries;
     }
 
-    public Dictionary getDictionary(UUID id) {
+    public Dictionary getDictionary(int id) {
         DictionaryCursorWrapper cursor = queryDictionaries(
                 "_id=?",
-                new String[]{id.toString()});
+                new String[]{Integer.toString(id)});
         try {
             if (cursor.getCount() == 0) {
                 return null;
