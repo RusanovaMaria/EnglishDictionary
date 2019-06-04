@@ -17,10 +17,23 @@ import com.rusanova.englishdictionary.list.WordList;
 import com.rusanova.englishdictionary.element.Dictionary;
 import com.rusanova.englishdictionary.element.Word;
 
+import java.sql.SQLDataException;
+import java.sql.SQLException;
+
 public class CreateElementActivity extends AppCompatActivity implements TextView.OnEditorActionListener {
+    private static final String ACTION = "action";
+    private static final String NAME = "name";
+    private static final String DESCRIPTION = "description";
+    private static final String ID = "id";
     private static final String TAG = "myLogs";
+
     private TextView mNameTextView;
     private TextView mDescriptionTextView;
+    private DataAction mDataAction;
+
+    private String name;
+    private String description;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,79 +43,94 @@ public class CreateElementActivity extends AppCompatActivity implements TextView
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mNameTextView = (TextView) findViewById(R.id.name);
+        mDescriptionTextView = findViewById(R.id.description);
+
         Intent intent = getIntent();
-        final int currentPageNumber = intent.getIntExtra(MainActivity.PAGE_NUMBER, -1);
-        if (currentPageNumber != -1) {
-            updateUI(currentPageNumber);
+        mDataAction = (DataAction) intent.getSerializableExtra(ACTION);
+
+        if (mDataAction == DataAction.Update) {
+            name = intent.getStringExtra(NAME);
+            description = intent.getStringExtra(DESCRIPTION);
+            id = intent.getIntExtra(ID, -1);
+        } else {
+            name = "";
+            description = "";
+            id = -1;
         }
+
+        updateUI(mDataAction);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.create_dictionary);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (currentPageNumber != -1) {
-                    addElement(currentPageNumber);
+                switch (mDataAction) {
+                    case Insert:
+                        addElement();
+                        break;
+                    case Update:
+                        updateElement();
+                        break;
                 }
             }
         });
     }
 
-    private void updateUI(int pageNumber) {
+    private void updateUI(DataAction dataAction) {
         String title = "";
         String nameHint = "";
         String descriptionHint = "";
-        TextView name = (TextView) findViewById(R.id.name);
-        name.setOnEditorActionListener(this);
-        TextView description = (TextView) findViewById(R.id.description);
-        description.setOnEditorActionListener(this);
+        mNameTextView.setOnEditorActionListener(this);
+        mDescriptionTextView.setOnEditorActionListener(this);
 
-        switch (pageNumber) {
-            case 0:
+        switch (dataAction) {
+            case Insert:
                 title = getResources().getString(R.string.create_dictionary_title);
                 nameHint = descriptionHint = getResources().getString(R.string.dictionary_name_hint);
                 descriptionHint = getResources().getString(R.string.dictionary_description_hint);
                 break;
-            case 1:
-                title = getResources().getString(R.string.create_word_title);
-                nameHint = getResources().getString(R.string.word_name_hint);
-                descriptionHint = getResources().getString(R.string.word_description_hint);
+            case Update:
+                title = getResources().getString(R.string.update_dictionary_title);
+                mNameTextView.setText(name);
+                mDescriptionTextView.setText(description);
+                break;
         }
 
         setTitle(title);
-        name.setHint(nameHint);
-        description.setHint(descriptionHint);
+        mNameTextView.setHint(nameHint);
+        mDescriptionTextView.setHint(descriptionHint);
     }
 
-    private void addElement(int pageNumber) {
-        mNameTextView = (TextView) findViewById(R.id.name);
+    private void addElement() {
         String name = mNameTextView.getText().toString();
-        mDescriptionTextView = findViewById(R.id.description);
         String description = mDescriptionTextView.getText().toString();
-        switch (pageNumber) {
-            case 0:
-                if (!name.equals("")) {
-                    Dictionary dictionary = new Dictionary(name, description);
-                    DictionaryList list = DictionaryList.get(this);
-                    list.add(dictionary);
-                    finish();
-                } else {
-                    Toast toast = Toast.makeText(CreateElementActivity.this, "Please enter the name of the dictionary!",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-                break;
-            case 1:
-                if (!name.equals("")) {
-                    Word word = new Word(name, description);
-                    WordList list = WordList.get(this);
-                    list.add(word);
-                    finish();
-                } else {
-                    Toast toast = Toast.makeText(CreateElementActivity.this, "Please enter the word!",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-                break;
+        if (!name.equals("")) {
+            Dictionary dictionary = new Dictionary(name, description);
+            DictionaryList list = DictionaryList.get(this);
+            list.add(dictionary);
+            finish();
+        } else {
+            Toast toast = Toast.makeText(CreateElementActivity.this, "Please enter the name of the dictionary!",
+                    Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+    private void updateElement() {
+        String name = mNameTextView.getText().toString();
+        String description = mDescriptionTextView.getText().toString();
+        if (!name.equals("")) {
+            DictionaryList list = DictionaryList.get(this);
+            Dictionary dictionary = list.getDictionary(id);
+            dictionary.setName(name);
+            dictionary.setDescription(description);
+            list.update(dictionary);
+            finish();
+        } else {
+            Toast toast = Toast.makeText(CreateElementActivity.this, "Please enter the name of the dictionary!",
+                    Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 
@@ -116,6 +144,5 @@ public class CreateElementActivity extends AppCompatActivity implements TextView
             Log.d(TAG, "NullPointerException onEditorAction CreateElementActivity.class");
             return false;
         }
-
     }
 }

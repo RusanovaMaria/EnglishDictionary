@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String PAGE_NUMBER = "PageNumber";
+    public static final String ACTION = "action";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +35,11 @@ public class MainActivity extends AppCompatActivity {
                 switch (pageNumber) {
                     case 0:
                         Intent intent = new Intent(MainActivity.this, CreateElementActivity.class);
-                        intent.putExtra(PAGE_NUMBER, pageNumber);
+                        intent.putExtra(ACTION, DataAction.Insert);
                         startActivity(intent);
                         break;
                     case 1:
-                        Intent intent1 = new Intent(MainActivity.this, CreateElementActivity.class);
-                        intent1.putExtra(PAGE_NUMBER, pageNumber);
-                        startActivity(intent1);
+
                 }
             }
         });

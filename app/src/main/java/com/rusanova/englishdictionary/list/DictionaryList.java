@@ -75,12 +75,12 @@ public class DictionaryList {
         }
     }
 
-    public void updateDictionary(Dictionary dictionary) {
-        String uuidString = Integer.toString(dictionary.getId());
+    public void update(Dictionary dictionary) {
+        String idString = Integer.toString(dictionary.getId());
         ContentValues values = getContentValues(dictionary);
         mDatabase.update(DictionaryDbSchema.DictionaryTable.NAME, values,
                 "_id = ?",
-                new String[]{uuidString});
+                new String[]{idString});
     }
 
     private static ContentValues getContentValues(Dictionary dictionary) {
