@@ -8,17 +8,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rusanova.englishdictionary.list.DictionaryList;
-import com.rusanova.englishdictionary.list.WordList;
 import com.rusanova.englishdictionary.element.Dictionary;
-import com.rusanova.englishdictionary.element.Word;
-
-import java.sql.SQLDataException;
-import java.sql.SQLException;
 
 public class CreateElementActivity extends AppCompatActivity implements TextView.OnEditorActionListener {
     private static final String ACTION = "action";
@@ -27,8 +24,8 @@ public class CreateElementActivity extends AppCompatActivity implements TextView
     private static final String ID = "id";
     private static final String TAG = "myLogs";
 
-    private TextView mNameTextView;
-    private TextView mDescriptionTextView;
+    private EditText mNameTextView;
+    private EditText mDescriptionTextView;
     private DataAction mDataAction;
 
     private String name;
@@ -43,8 +40,8 @@ public class CreateElementActivity extends AppCompatActivity implements TextView
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mNameTextView = (TextView) findViewById(R.id.name);
-        mDescriptionTextView = findViewById(R.id.description);
+        mNameTextView = (EditText) findViewById(R.id.name);
+        mDescriptionTextView = (EditText) findViewById(R.id.description);
 
         Intent intent = getIntent();
         mDataAction = (DataAction) intent.getSerializableExtra(ACTION);
@@ -87,8 +84,9 @@ public class CreateElementActivity extends AppCompatActivity implements TextView
         switch (dataAction) {
             case Insert:
                 title = getResources().getString(R.string.create_dictionary_title);
-                nameHint = descriptionHint = getResources().getString(R.string.dictionary_name_hint);
+                nameHint = getResources().getString(R.string.dictionary_name_hint);
                 descriptionHint = getResources().getString(R.string.dictionary_description_hint);
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                 break;
             case Update:
                 title = getResources().getString(R.string.update_dictionary_title);
@@ -100,6 +98,7 @@ public class CreateElementActivity extends AppCompatActivity implements TextView
         setTitle(title);
         mNameTextView.setHint(nameHint);
         mDescriptionTextView.setHint(descriptionHint);
+        mNameTextView.setSelection(mNameTextView.getText().length());
     }
 
     private void addElement() {
