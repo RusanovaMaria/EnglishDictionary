@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.rusanova.englishdictionary.database.DatabaseHelper;
 import com.rusanova.englishdictionary.database.cursorwrapper.WordCursorWrapper;
@@ -13,7 +12,6 @@ import com.rusanova.englishdictionary.element.Word;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class WordList {
     private Context mContext;
@@ -47,7 +45,7 @@ public class WordList {
 
     public List<Word> getWords() {
         List<Word> words = new ArrayList<>();
-        WordCursorWrapper cursor = queryWords(null, null);
+        WordCursorWrapper cursor = query(null, null);
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
@@ -61,7 +59,7 @@ public class WordList {
     }
 
     public Word getWord(int id) {
-        WordCursorWrapper cursor = queryWords
+        WordCursorWrapper cursor = query
                 ("_id=?",
                         new String[]{Integer.toString(id)});
         try {
@@ -84,7 +82,7 @@ public class WordList {
         return values;
     }
 
-    private WordCursorWrapper queryWords(String whereClause, String[] whereArgs) {
+    private WordCursorWrapper query(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
                 WordDbSchema.WordTable.NAME,
                 null,

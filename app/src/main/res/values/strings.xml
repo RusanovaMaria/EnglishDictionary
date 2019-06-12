@@ -24,4 +24,5 @@
     <string name="create_word_title"> Create word</string>
     <string name="word_name_hint">Word</string>
     <string name="word_description_hint">Translation</string>
+    <string name="hint_search">Search</string>
 </resources>
