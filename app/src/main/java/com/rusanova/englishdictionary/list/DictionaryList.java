@@ -9,10 +9,10 @@ import com.rusanova.englishdictionary.database.DatabaseHelper;
 import com.rusanova.englishdictionary.database.cursorwrapper.DictionaryCursorWrapper;
 import com.rusanova.englishdictionary.database.dbschema.DictionaryDbSchema;
 import com.rusanova.englishdictionary.element.Dictionary;
+import com.rusanova.englishdictionary.element.Element;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class DictionaryList {
     private Context mContext;
@@ -45,9 +45,9 @@ public class DictionaryList {
                 new String[]{uuidString});
     }
 
-    public List<Dictionary> getDictionaries() {
-        List<Dictionary> dictionaries = new ArrayList<>();
-        DictionaryCursorWrapper cursor = queryDictionaries(null, null);
+    public List<Element> getDictionaries() {
+        List<Element> dictionaries = new ArrayList<>();
+        DictionaryCursorWrapper cursor = query(null, null);
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
@@ -61,7 +61,7 @@ public class DictionaryList {
     }
 
     public Dictionary getDictionary(int id) {
-        DictionaryCursorWrapper cursor = queryDictionaries(
+        DictionaryCursorWrapper cursor = query(
                 "_id=?",
                 new String[]{Integer.toString(id)});
         try {
@@ -74,6 +74,23 @@ public class DictionaryList {
             cursor.close();
         }
     }
+
+    public List<Element> search(String dictionaryNamePart) {
+        List<Element> dictionaries = new ArrayList<>();
+        DictionaryCursorWrapper cursor = query(
+                DictionaryDbSchema.DictionaryTable.Cols.NAME + " like ?", new String[]{dictionaryNamePart + "%"});
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                dictionaries.add(cursor.getDictionary());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return dictionaries;
+    }
+
 
     public void update(Dictionary dictionary) {
         String idString = Integer.toString(dictionary.getId());
@@ -90,7 +107,7 @@ public class DictionaryList {
         return values;
     }
 
-    private DictionaryCursorWrapper queryDictionaries(String whereClause, String[] whereArgs) {
+    private DictionaryCursorWrapper query(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
                 DictionaryDbSchema.DictionaryTable.NAME,
                 null,

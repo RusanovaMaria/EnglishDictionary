@@ -11,25 +11,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rusanova.englishdictionary.R;
-import com.rusanova.englishdictionary.element.Word;
+import com.rusanova.englishdictionary.element.Element;
 import com.rusanova.englishdictionary.list.WordList;
 import com.rusanova.englishdictionary.recyclerviewadapter.WordRecyclerViewAdapter;
 
 import java.util.List;
 
-public class WordListFragment extends Fragment {
-    private static final int PAGE_NUMBER = 1;
-    private RecyclerView mRecyclerView;
-    private WordRecyclerViewAdapter mAdapter;
+public class WordPageFragment extends Fragment {
+    private static final String PAGE_TITLE = "Words";
+    private static RecyclerView sRecyclerView;
+    private static WordRecyclerViewAdapter sAdapter;
+    private static WordPageFragment sListFragment;
 
-    public WordListFragment() {
+    public WordPageFragment() {
 
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -37,11 +37,11 @@ public class WordListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recycler_view_list, container, false);
         Context context = view.getContext();
-        mRecyclerView = (RecyclerView) view;
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        sRecyclerView = (RecyclerView) view;
+        sRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         WordList wordList = WordList.get(getActivity());
-        mAdapter = new WordRecyclerViewAdapter(wordList.getWords());
-        mRecyclerView.setAdapter(mAdapter);
+        sAdapter = new WordRecyclerViewAdapter(wordList.getWords());
+        sRecyclerView.setAdapter(sAdapter);
         return view;
     }
 
@@ -69,22 +69,33 @@ public class WordListFragment extends Fragment {
 
     private void updateUI() {
         WordList wordList = WordList.get(getActivity());
-        List<Word> words = wordList.getWords();
-        if (mAdapter == null) {
-            mAdapter = new WordRecyclerViewAdapter(words);
-            mRecyclerView.setAdapter(mAdapter);
+        List<Element> words = wordList.getWords();
+        if (sAdapter == null) {
+            sAdapter = new WordRecyclerViewAdapter(words);
+            sRecyclerView.setAdapter(sAdapter);
         } else {
-            mAdapter.setElements(words);
-            mAdapter.notifyDataSetChanged();
+            sAdapter.setElements(words);
+            sAdapter.notifyDataSetChanged();
         }
     }
 
-    public static int getPageNumber() {
-        return PAGE_NUMBER;
+    public static Fragment newInstance(List<Element> words) {
+        if (sListFragment == null) {
+            sListFragment = new WordPageFragment();
+        }
+        if (words != null) {
+            sAdapter.setElements(words);
+            sAdapter.notifyDataSetChanged();
+        }
+        return sListFragment;
+    }
+
+    public static String getTitle() {
+        return PAGE_TITLE;
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+        // TODO: UPDATE argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

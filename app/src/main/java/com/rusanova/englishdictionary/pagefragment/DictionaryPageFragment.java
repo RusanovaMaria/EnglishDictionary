@@ -10,26 +10,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.rusanova.englishdictionary.element.Dictionary;
+import com.rusanova.englishdictionary.element.Element;
 import com.rusanova.englishdictionary.recyclerviewadapter.DictionaryRecyclerViewAdapter;
 import com.rusanova.englishdictionary.R;
 import com.rusanova.englishdictionary.list.DictionaryList;
-import com.rusanova.englishdictionary.element.Dictionary;
 
 import java.util.List;
 
-public class DictionaryListFragment extends Fragment {
-    private static final int PAGE_NUMBER = 0;
-    private RecyclerView mRecyclerView;
-    private DictionaryRecyclerViewAdapter mAdapter;
+public class DictionaryPageFragment extends Fragment {
+    private static final String PAGE_TITLE = "Dictionaries";
+    private static RecyclerView sRecyclerView;
+    private static DictionaryRecyclerViewAdapter sAdapter;
+    private static DictionaryPageFragment sListFragment;
 
-    public DictionaryListFragment() {
+    public DictionaryPageFragment() {
 
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -37,11 +39,11 @@ public class DictionaryListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recycler_view_list, container, false);
         Context context = view.getContext();
-        mRecyclerView = (RecyclerView) view;
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        DictionaryList dictionaryList = DictionaryList.get(getActivity());
-        mAdapter = new DictionaryRecyclerViewAdapter(dictionaryList.getDictionaries());
-        mRecyclerView.setAdapter(mAdapter);
+        sRecyclerView = (RecyclerView) view;
+        sRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        DictionaryList dictionaryList = DictionaryList.get(context);
+        sAdapter = new DictionaryRecyclerViewAdapter(dictionaryList.getDictionaries());
+        sRecyclerView.setAdapter(sAdapter);
         return view;
     }
 
@@ -69,22 +71,33 @@ public class DictionaryListFragment extends Fragment {
 
     private void updateUI() {
         DictionaryList dictionaryList = DictionaryList.get(getActivity());
-        List<Dictionary> dictionaries = dictionaryList.getDictionaries();
-        if (mAdapter == null) {
-            mAdapter = new DictionaryRecyclerViewAdapter(dictionaries);
-            mRecyclerView.setAdapter(mAdapter);
+        List<Element> dictionaries = dictionaryList.getDictionaries();
+        if (sAdapter == null) {
+            sAdapter = new DictionaryRecyclerViewAdapter(dictionaries);
+            sRecyclerView.setAdapter(sAdapter);
         } else {
-            mAdapter.setElements(dictionaries);
-            mAdapter.notifyDataSetChanged();
+            sAdapter.setElements(dictionaries);
+            sAdapter.notifyDataSetChanged();
         }
     }
 
-    public static int getPageNumber() {
-        return PAGE_NUMBER;
+    public static Fragment newInstance(List<Element> dictionaries) {
+        if (sListFragment == null) {
+            sListFragment = new DictionaryPageFragment();
+        }
+        if (dictionaries != null) {
+            sAdapter.setElements(dictionaries);
+            sAdapter.notifyDataSetChanged();
+        }
+        return sListFragment;
+    }
+
+    public static String getTitle() {
+        return PAGE_TITLE;
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+        // TODO: UPDATE argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

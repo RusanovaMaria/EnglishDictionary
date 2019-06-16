@@ -16,25 +16,18 @@ public class WordCursorWrapper extends CursorWrapper {
 
     public WordCursorWrapper(Cursor cursor) {
         super(cursor);
-      //  mContext = context;
     }
 
     public Word getWord() {
         String idString = getString(getColumnIndex("_id"));
         String name = getString(getColumnIndex(WordDbSchema.WordTable.Cols.NAME));
         String translation = getString(getColumnIndex(WordDbSchema.WordTable.Cols.TRANSLATION));
-        String dictionaryStringID = getString(getColumnIndex(WordDbSchema.WordTable.Cols.DICTIONARY_ID));
+        String dictionaryStringId = getString(getColumnIndex(WordDbSchema.WordTable.Cols.DICTIONARY_ID));
 
         Word word = new Word(Integer.parseInt(idString));
         word.setName(name);
         word.setDescription(translation);
 
-       /* if (dictionaryStringID != null) {
-            UUID dictionaryUUID = UUID.fromString(dictionaryStringID);
-            DictionaryList dictionaryList = DictionaryList.get(mContext);
-            Dictionary dictionary = dictionaryList.getDictionary(dictionaryUUID);
-            word.setDictionary(dictionary);
-        } */
         return word;
     }
 }

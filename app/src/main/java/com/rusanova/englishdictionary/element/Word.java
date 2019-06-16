@@ -1,8 +1,6 @@
 package com.rusanova.englishdictionary.element;
 
-import java.util.UUID;
-
-public class Word {
+public class Word implements Element {
     private int mId;
     private String mName;
     private String mDescription;
@@ -17,26 +15,32 @@ public class Word {
         mId = id;
     }
 
+    @Override
     public int getId() {
         return mId;
     }
 
+    @Override
     public void setId(int id) {
         mId = id;
     }
 
+    @Override
     public String getName() {
         return mName;
     }
 
+    @Override
     public void setName(String name) {
         mName = name;
     }
 
+    @Override
     public String getDescription() {
         return mDescription;
     }
 
+    @Override
     public void setDescription(String description) {
         mDescription = description;
     }

@@ -1,4 +1,4 @@
-package com.rusanova.englishdictionary;
+package com.rusanova.englishdictionary.createelementactivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,8 +14,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.rusanova.englishdictionary.R;
 import com.rusanova.englishdictionary.list.DictionaryList;
 import com.rusanova.englishdictionary.element.Dictionary;
+import com.rusanova.englishdictionary.mainactivity.DataAction;
 
 public class CreateElementActivity extends AppCompatActivity implements TextView.OnEditorActionListener {
     private static final String ACTION = "action";
@@ -46,7 +48,7 @@ public class CreateElementActivity extends AppCompatActivity implements TextView
         Intent intent = getIntent();
         mDataAction = (DataAction) intent.getSerializableExtra(ACTION);
 
-        if (mDataAction == DataAction.Update) {
+        if (mDataAction == DataAction.UPDATE) {
             name = intent.getStringExtra(NAME);
             description = intent.getStringExtra(DESCRIPTION);
             id = intent.getIntExtra(ID, -1);
@@ -63,10 +65,10 @@ public class CreateElementActivity extends AppCompatActivity implements TextView
             @Override
             public void onClick(View view) {
                 switch (mDataAction) {
-                    case Insert:
+                    case INSERT:
                         addElement();
                         break;
-                    case Update:
+                    case UPDATE:
                         updateElement();
                         break;
                 }
@@ -82,13 +84,13 @@ public class CreateElementActivity extends AppCompatActivity implements TextView
         mDescriptionTextView.setOnEditorActionListener(this);
 
         switch (dataAction) {
-            case Insert:
+            case INSERT:
                 title = getResources().getString(R.string.create_dictionary_title);
                 nameHint = getResources().getString(R.string.dictionary_name_hint);
                 descriptionHint = getResources().getString(R.string.dictionary_description_hint);
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                 break;
-            case Update:
+            case UPDATE:
                 title = getResources().getString(R.string.update_dictionary_title);
                 mNameTextView.setText(name);
                 mDescriptionTextView.setText(description);

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.rusanova.englishdictionary.database.DatabaseHelper;
 import com.rusanova.englishdictionary.database.cursorwrapper.WordCursorWrapper;
 import com.rusanova.englishdictionary.database.dbschema.WordDbSchema;
+import com.rusanova.englishdictionary.element.Element;
 import com.rusanova.englishdictionary.element.Word;
 
 import java.util.ArrayList;
@@ -43,8 +44,8 @@ public class WordList {
                 new String[]{uuidString});
     }
 
-    public List<Word> getWords() {
-        List<Word> words = new ArrayList<>();
+    public List<Element> getWords() {
+        List<Element> words = new ArrayList<>();
         WordCursorWrapper cursor = query(null, null);
         try {
             cursor.moveToFirst();
@@ -55,6 +56,22 @@ public class WordList {
         } finally {
             cursor.close();
         }
+        return words;
+    }
+
+    public List<Element> search(String wordPart) {
+        List<Element> words = new ArrayList<>();
+        WordCursorWrapper cursor = query(WordDbSchema.WordTable.Cols.NAME + " like ?", new String[]{wordPart + "%"});
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                words.add(cursor.getWord());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+
         return words;
     }
 
@@ -92,7 +109,6 @@ public class WordList {
                 null,
                 null
         );
-        // return null;
         return new WordCursorWrapper(cursor);
     }
 }

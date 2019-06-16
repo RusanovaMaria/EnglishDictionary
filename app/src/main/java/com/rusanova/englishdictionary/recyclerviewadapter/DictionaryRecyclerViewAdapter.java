@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.rusanova.englishdictionary.CreateElementActivity;
-import com.rusanova.englishdictionary.DataAction;
+import com.rusanova.englishdictionary.createelementactivity.CreateElementActivity;
+import com.rusanova.englishdictionary.mainactivity.DataAction;
 import com.rusanova.englishdictionary.R;
-import com.rusanova.englishdictionary.element.Dictionary;
+import com.rusanova.englishdictionary.element.Element;
 
 import java.util.List;
 
 public class DictionaryRecyclerViewAdapter extends RecyclerView.Adapter<DictionaryRecyclerViewAdapter.ViewHolder> {
-    private List<Dictionary> mElements;
+    private List<Element> mElements;
 
     public DictionaryRecyclerViewAdapter(List elements) {
         this.mElements = elements;
@@ -60,7 +60,7 @@ public class DictionaryRecyclerViewAdapter extends RecyclerView.Adapter<Dictiona
                 intent.putExtra(NAME, viewHolder.name.getText());
                 intent.putExtra(DESCRIPTION, viewHolder.description.getText());
                 intent.putExtra(ID, viewHolder.id);
-                intent.putExtra(ACTION, DataAction.Update);
+                intent.putExtra(ACTION, DataAction.UPDATE);
                 v.getContext().startActivity(intent);
             }
         });
@@ -76,7 +76,7 @@ public class DictionaryRecyclerViewAdapter extends RecyclerView.Adapter<Dictiona
         return mElements.size();
     }
 
-    public void setElements(List<Dictionary> elements) {
+    public void setElements(List<Element> elements) {
         mElements = elements;
     }
 }

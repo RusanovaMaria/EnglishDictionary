@@ -7,12 +7,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rusanova.englishdictionary.R;;
+import com.rusanova.englishdictionary.element.Element;
 import com.rusanova.englishdictionary.element.Word;
 
 import java.util.List;
 
 public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerViewAdapter.ViewHolder> {
-    private List<Word> mElements;
+    private List<Element> mElements;
 
     public WordRecyclerViewAdapter(List elements) {
         this.mElements = elements;
@@ -52,7 +53,7 @@ public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerVi
         return mElements.size();
     }
 
-    public void setElements(List<Word> elements) {
+    public void setElements(List<Element> elements) {
         mElements = elements;
     }
 }
