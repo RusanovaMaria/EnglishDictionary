@@ -25,4 +25,5 @@
     <string name="word_name_hint">Word</string>
     <string name="word_description_hint">Translation</string>
     <string name="hint_search">Search</string>
+    <string name="hint_delete">Delete</string>
 </resources>
